@@ -5,21 +5,19 @@ env:
   - BACKEND_SOURCE=$TRAVIS_BUILD_DIR/server
 services:
   - docker
-before_install:
-  - cd $TRAVIS_BUILD_DIR/docker
 before_script: 
   - pip install docker-compose
-  - docker-compose build
 jobs:
   include:
-    - stage: "test"
-      name: "Test application"
-
-      script: docker-compose run planimation-backend:latest sh -c "python manage.py test"
+    - stage: "Test"
+      name: "Test Application"
       script: echo "Test pass ..."
-    - stage: "deploy"
+    - stage: "Build docker image"
+      name: "Push Application to dockerhub"
       if: branch = develop
       script: 
-        - echo "Deploy application"
+        - echo "Push image to DockerHub"
+        - cd $TRAVIS_BUILD_DIR/docker
+        - docker-compose build
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
         - docker push rakeshchoyal92/planimation-backend:latest
