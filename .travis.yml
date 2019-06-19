@@ -9,11 +9,7 @@ before_script:
   - pip install docker-compose
 jobs:
   include:
-    - stage: "Test"
-      name: "Test Application"
-      script: echo "Test pass ..."
     - stage: "Build docker image"
-      name: "Push Application to dockerhub"
       if: branch = develop
       script: 
         - echo "Push image to DockerHub"
