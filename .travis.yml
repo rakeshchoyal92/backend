@@ -9,12 +9,14 @@ before_script:
   - pip install docker-compose
 jobs:
   include:
+    if: type = pull_request
     - stage: "Test"
       name: "Test Application"
       script: echo "Test pass ..."
     - stage: "Build docker image"
       name: "Push Application to dockerhub"
       if: branch = develop
+      name: "Push Application to dockerhub"
       script: 
         - echo "Push image to DockerHub"
         - cd $TRAVIS_BUILD_DIR/docker
