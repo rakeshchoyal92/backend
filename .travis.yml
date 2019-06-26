@@ -2,7 +2,7 @@
 language: python
 python: "3.6"
 env:
-  - BACKEND_SOURCE=$TRAVIS_BUILD_DIR/server DOCKER_SOURCE=$TRAVIS_BUILD_DIR/docker/release/Dockerfile -IMAGE_TAG=rakeshchoyal92/planimation-backend:latest
+  - BACKEND_SOURCE=$TRAVIS_BUILD_DIR/server DOCKER_SOURCE=$TRAVIS_BUILD_DIR/docker/release/Dockerfile IMAGE_TAG=rakeshchoyal92/planimation-backend:latest
 services:
   - docker
 before_script: 
