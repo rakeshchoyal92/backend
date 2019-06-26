@@ -2,22 +2,17 @@
 language: python
 python: "3.6"
 env:
-  - BACKEND_SOURCE=$TRAVIS_BUILD_DIR/server
+  - BACKEND_SOURCE=$TRAVIS_BUILD_DIR/server DOCKER_SOURCE=$TRAVIS_BUILD_DIR/docker/release/Dockerfile -IMAGE_TAG=rakeshchoyal92/planimation-backend:latest
 services:
   - docker
 before_script: 
   - pip install docker-compose
 jobs:
   include:
-    - stage: "Test"
-      name: "Test Application"
-      script: echo "Test pass ..."
     - stage: "Build docker image"
-      name: "Push Application to dockerhub"
       if: branch = develop
       script: 
-        - echo "Push image to DockerHub"
         - cd $TRAVIS_BUILD_DIR/docker
-        - docker-compose build
+        - docker build -t ${IMAGE_TAG} -f ${DOCKER_SOURCE} ${BACKEND_SOURCE}
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-        - docker push rakeshchoyal92/planimation-backend:latest
+        - docker push ${IMAGE_TAG}
